@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Characters</title>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Listing</h1>
+            <a href="https://super-fishstick-wrqjpgwrv7q6h9p49-5000.app.github.dev/"><h3>Homepage</h3></a>
+        </div>
+        <div class="container">
+            <div class="section">
+                {% for searching in searchings %}
+                <h1>{{ searching.name }}</h1>
+                {% endfor %}
+                <table id="SQLtable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Birthday</th>
+                            <th>Birthplace</th>
+                        </tr>
+                    </thead>
+                        {% for searching in searchings %}
+                            <tr>
+                                <td>{{ searching.name }}</td>
+                                <td>{{ searching.birthdate }}</td>
+                                <td>{{ searching.birthplace }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <h2>Edit Character</h2>
+                <form name="send edits" value="send edits" action="/characters" method="POST">
+                    <input name="editName" placeholder="Name" autocomplete=off type="text">
+
+                    <input name="editBirthdate" placeholder="Birthdate DD/MM" autocomplete=off type="text">
+
+                    <input name="editBirthplace" placeholder="Birthplace" autocomplete=off type="text">
+
+                    <input type="hidden" name="search" value="{{ search }}">
+
+                    <input name="sendEdits" type="submit" value="Send Edits">
+                </form>
+            </div>
+             <div class="section">
+                <h2>Delete Character</h2>
+
+
+                <button id="deleteButton" name="deleteButton" value="delete" >Delete</button><br><br>
+
+                <form name="deleteSelection" method="POST">
+                    <input id="cancelButton" name="cancelButton" type="submit" value="Cancel"><br>
+                    <input id="confirmButton" name="confirmButton" type="submit" value="Confirm">
+                    <input type="hidden" name="search" value="{{ search }}">
+                </form>
+                <script>
+                    let selection = document.getElementById("deleteButton");
+                    let confirmButton = document.getElementById("confirmButton");
+                    let cancelButton = document.getElementById("cancelButton");
+                    selection.addEventListener("click", function(){ selection.style.display = "none";
+                        confirmButton.style.display = 'inline-block'; cancelButton.style.display = 'inline-block';
+                    } );
+
+                    cancelButton.addEventListener("click", function(){ selection.style.display = "inline-block";
+                        confirmButton.style.display = 'none'; cancelButton.style.display = 'none';
+                    } );
+
+                </script>
+                </div>
+                <div class="section">
+                    <h2>Add Character</h2>
+                        <form name="add" method="POST">
+                            <input name="name" placeholder="Name" type="text">
+                            <input name="birthdate" placeholder="Birthdate DD/MM" type="text">
+                            <input name="birthplace" placeholder="Birthplace" type="text">
+                            <input name="Add" type="submit" value="Add">
+                        </form>
+                </div>
+             </div>
+        </div>
+    </body>
+</html>
